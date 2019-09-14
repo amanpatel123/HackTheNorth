@@ -52,7 +52,7 @@ def is_user_message(message):
 
 
 def pushItem(url, userId):
-    newItem = {"name": userId,  "url": url, "initial": None, "lowest":None, "current": None }
+    newItem = {"userId": userId, "pname": None, "URL": url,   "initial_price": None, "lowest_price":None ,"difference": None , "change": None}
     db.child("item").push(newItem)
 
 
