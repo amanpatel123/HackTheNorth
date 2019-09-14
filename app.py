@@ -88,9 +88,6 @@ def listen():
         return "ok"
 
 
-schedule.every(1).minutes.do(job)  
-
-
 
 @app.route("/")
 def home():
