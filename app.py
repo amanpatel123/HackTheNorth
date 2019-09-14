@@ -45,9 +45,11 @@ def listen():
     if request.method == 'POST':
         payload = request.json
         event = payload['entry'][0]['messaging']
+        print(event)
         for x in event:
             if is_user_message(x):
                 text = x['message']['text']
+                print('text:', text)
                 sender_id = x['sender']['id']
                 respond(sender_id, text)
 
