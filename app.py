@@ -76,13 +76,14 @@ def checkDatabaseTask(userId):
     firebase = pyrebase.initialize_app(config)
     db = firebase.database()
     
-    all_datas=db.child("DATA").get()
-    for key, data in all_datas:
-        user_id=data.child("userId").get()
-        if user_id==userId.val():
-            change = data.child("change").value()
+    all_datas=db.child("DATA").get().val()
+    for key, data in all_datas.items():
+        
+        user_id=data["userId"]
+        if user_id==userId:
+            change = data["change"]
             if change==1:
-                difference=data.child("difference").value()
+                difference=data["difference"]
                 string=str.format("The price goes down by %d", difference)
                 send_message(userId, string)
                 
