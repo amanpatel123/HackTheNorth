@@ -41,12 +41,13 @@ def is_user_message(message):
             message['message'].get('text') and
             not message['message'].get("is_echo"))
 
-
+counter = 0
 def pushItem(url, userId):
     firebase = pyrebase.initialize_app(config)
     db = firebase.database()
     newItem = {"userId": userId, "pname": None, "URL": url,   "initial_price": None, "lowest_price":None ,"difference": None , "change": None}
-    db.child("DATA").push(newItem)
+    counter+=1
+    db.child("DATA").child(counter).push(newItem)
 
 
 @app.route("/webhook", methods=['GET','POST'])
@@ -68,6 +69,7 @@ def listen():
                 sender_id = x['sender']['id']
                 print("start before push item")
                 pushItem(text, sender_id)
+                
                 print("after push item")
                 respond(sender_id, text)
 
@@ -81,6 +83,8 @@ def listen():
 @app.route("/")
 def home():
     return render_template("home.html")
+
+
 
 
 def send_message(recipient_id, text):
