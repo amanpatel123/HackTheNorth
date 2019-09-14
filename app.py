@@ -13,7 +13,7 @@ app = Flask(__name__)
 
 FB_API_URL = 'https://graph.facebook.com/v2.6/me/messages'
 VERIFY_TOKEN = 'aBaNIgB/sj70tCgtPpK50ZIf9fHLVTx/S1V/A4P6STM='
-PAGE_ACCESS_TOKEN = 'EAAGfED5iSXUBABjOntWKe6dEqhtpK5qAZAhHKvaqXdqKzZAfez3miGnbreftfyTzuKRyMDZCf0WAOHBLsawX2NiibqMoVTpDNgW7YE8QaO3akWwi694WfOBQVxIAAowMHK32sOBvvyoskb3ZBuBD1eIEpX6oG0bd6JrsZCszZBXwZDZD'
+PAGE_ACCESS_TOKEN = 'EAAGfED5iSXUBADpODELNQ5L91rQTVcc4oZBeNMPX6blm3qCpdIdnkcD5aGXqL6mP2YnGv6jjl1q6NlbYs9EZCz4ij3bP0JHJIZCtK4vZBSKrrnfNLDJweZCZASrtVfRPbJcaD8yFs6g373aSfrAJVDIDJSpu3RYQeSOZCnghM6mLQZDZD'
 
 
 def get_bot_response(message):
@@ -46,7 +46,6 @@ def pushItem(url, userId):
     firebase = pyrebase.initialize_app(config)
     db = firebase.database()  
     newItem = {"userId": userId, "pname": None, "URL": url,   "initial_price": None, "lowest_price":None ,"difference": None , "change": None}
-    
     db.child("DATA").push(newItem)
 
 # def checkDatabaseTask(userId):
@@ -58,7 +57,11 @@ def pushItem(url, userId):
 #         user_id=data.child("userId").get()
 #         if user_id==userId.val():
 #             change
-        
+# def job():
+#     print("scheduled job")
+    
+    
+      
         
 
 
@@ -74,14 +77,10 @@ def listen():
         payload = request.json
         event = payload['entry'][0]['messaging']
         for x in event:
-            print("start x in event")
             if is_user_message(x):
                 text = x['message']['text']
                 sender_id = x['sender']['id']
-                print("start before push item")
                 pushItem(text, sender_id)
-                
-                print("after push item")
                 respond(sender_id, text)
 
         return "ok"
