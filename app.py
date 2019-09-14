@@ -51,6 +51,10 @@ def is_user_message(message):
             not message['message'].get("is_echo"))
 
 
+def pushItem(url, userId):
+    newItem = {"name": userId,  "url": url, "initial": None, "lowest":None, "current": None }
+    db.child("item").push(newItem)
+
 
 @app.route("/webhook", methods=['GET','POST'])
 def listen():
@@ -74,9 +78,6 @@ def listen():
         return "ok"
 
 
-def pushItem(url, userId):
-    newItem = {"name": userId,  "url": url, "initial": None, "lowest":None, "current": None }
-    db.child("item").push(newItem)
 
 
 
