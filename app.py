@@ -1,6 +1,6 @@
 from flask import Flask, request, render_template
 import requests
-import pyrebase
+from pyrebase import pyrebase
 
 config = {
   "apiKey": "AIzaSyBrTraklyfhPk2BNhPsmw_djvKwVSy7oF4",
