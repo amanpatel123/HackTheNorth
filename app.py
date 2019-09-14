@@ -53,7 +53,7 @@ def checkDatabaseTask(userId):
     db = firebase.database()
     
     all_datas=db.child("DATA").get()
-    for data in all_datas:
+    for key, data in all_datas:
         user_id=data.child("userId").get()
         if user_id==userId.val():
             change = data.child("change").value()
