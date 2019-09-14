@@ -21,6 +21,30 @@ def get_bot_response(message):
     the user said. Replace this function with one connected to chatbot."""
     return "This is a dummy response to '{}'".format(message)
 
+def send_message(recipient_id, text):
+    """Send a response to Facebook"""
+    payload = {
+        'message': {
+            'text': text
+        },
+        'recipient': {
+            'id': recipient_id
+        },
+        'notification_type': 'regular'
+    }
+
+    auth = {
+        'access_token': PAGE_ACCESS_TOKEN
+    }
+
+    response = requests.post(
+        FB_API_URL,
+        params=auth,
+        json=payload
+    )
+
+    return response.json()
+
 
 def verify_webhook(req):
     if req.args.get("hub.verify_token") == VERIFY_TOKEN:
@@ -85,38 +109,10 @@ def listen():
                 respond(sender_id, text)
         return "ok"
 
-
-
 @app.route("/")
 def home():
     return render_template("home.html")
 
-
-
-
-def send_message(recipient_id, text):
-    """Send a response to Facebook"""
-    payload = {
-        'message': {
-            'text': text
-        },
-        'recipient': {
-            'id': recipient_id
-        },
-        'notification_type': 'regular'
-    }
-
-    auth = {
-        'access_token': PAGE_ACCESS_TOKEN
-    }
-
-    response = requests.post(
-        FB_API_URL,
-        params=auth,
-        json=payload
-    )
-
-    return response.json()
 
 if __name__ == "__main__":
     app.run(debug=True)
