@@ -14,10 +14,6 @@ firebase = pyrebase.initialize_app(config)
 db = firebase.database()
 
 
-
-
-
-
 app = Flask(__name__)
 
 FB_API_URL = 'https://graph.facebook.com/v2.6/me/messages'
@@ -53,7 +49,7 @@ def is_user_message(message):
 
 def pushItem(url, userId):
     newItem = {"userId": userId, "pname": None, "URL": url,   "initial_price": None, "lowest_price":None ,"difference": None , "change": None}
-    db.child("item").push(newItem)
+    db.child("DATA").push(newItem)
 
 
 @app.route("/webhook", methods=['GET','POST'])
@@ -66,11 +62,9 @@ def listen():
     if request.method == 'POST':
         payload = request.json
         event = payload['entry'][0]['messaging']
-        print(event)
         for x in event:
             if is_user_message(x):
                 text = x['message']['text']
-                print('text:', text)
                 sender_id = x['sender']['id']
                 pushItem(text, sender_id)
                 respond(sender_id, text)
