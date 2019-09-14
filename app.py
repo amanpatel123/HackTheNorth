@@ -1,8 +1,6 @@
 from flask import Flask, request, render_template
 import requests
 from pyrebase import pyrebase
-import schedule
-import time
 
 config = {
   "apiKey": "AIzaSyBrTraklyfhPk2BNhPsmw_djvKwVSy7oF4",
