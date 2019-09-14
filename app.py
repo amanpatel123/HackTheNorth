@@ -50,17 +50,21 @@ def pushItem(url, userId):
     newItem = {"userId": userId, "pname": "null", "URL": url,   "initial_price": "null", "lowest_price":"null" ,"difference": "null" , "change": "null"}
     db.child("DATA").push(newItem)
 
-# def checkDatabaseTask(userId):
-#     firebase = pyrebase.initialize_app(config)
-#     db = firebase.database()
+def checkDatabaseTask(userId):
+    firebase = pyrebase.initialize_app(config)
+    db = firebase.database()
     
-#     all_datas=db.child("DATA").get()
-#     for data in all_datas:
-#         user_id=data.child("userId").get()
-#         if user_id==userId.val():
-#             change
-def job():
-    print("scheduled job")        
+    all_datas=db.child("DATA").get()
+    for data in all_datas:
+        user_id=data.child("userId").get()
+        if user_id==userId.val():
+            change = data.child("change").value()
+            if change==1:
+                difference=data.child("difference").value()
+                string=str.format("The price goes down by %d", difference)
+                respond(userId, string)
+                
+   
 
 
 @app.route("/webhook", methods=['GET','POST'])
@@ -79,6 +83,7 @@ def listen():
                 text = x['message']['text']
                 sender_id = x['sender']['id']
                 pushItem(text, sender_id)
+                checkDatabaseTask(sender_id)
                 respond(sender_id, text)
         return "ok"
 
