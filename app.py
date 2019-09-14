@@ -9,11 +9,6 @@ config = {
   "storageBucket": "pricechecker-71a78.appspot.com"
 }
 
-firebase = pyrebase.initialize_app(config)
-
-db = firebase.database()
-
-
 app = Flask(__name__)
 
 FB_API_URL = 'https://graph.facebook.com/v2.6/me/messages'
@@ -48,6 +43,8 @@ def is_user_message(message):
 
 
 def pushItem(url, userId):
+    firebase = pyrebase.initialize_app(config)
+    db = firebase.database()
     newItem = {"userId": userId, "pname": None, "URL": url,   "initial_price": None, "lowest_price":None ,"difference": None , "change": None}
     db.child("DATA").push(newItem)
 
