@@ -1,6 +1,8 @@
 from flask import Flask, request, render_template
 import requests
 from pyrebase import pyrebase
+import schedule
+import time
 
 config = {
   "apiKey": "AIzaSyBrTraklyfhPk2BNhPsmw_djvKwVSy7oF4",
@@ -45,7 +47,7 @@ def is_user_message(message):
 def pushItem(url, userId):
     firebase = pyrebase.initialize_app(config)
     db = firebase.database()  
-    newItem = {"userId": userId, "pname": None, "URL": url,   "initial_price": None, "lowest_price":None ,"difference": None , "change": None}
+    newItem = {"userId": userId, "pname": "null", "URL": url,   "initial_price": "null", "lowest_price":"null" ,"difference": "null" , "change": "null"}
     db.child("DATA").push(newItem)
 
 # def checkDatabaseTask(userId):
@@ -57,12 +59,8 @@ def pushItem(url, userId):
 #         user_id=data.child("userId").get()
 #         if user_id==userId.val():
 #             change
-# def job():
-#     print("scheduled job")
-    
-    
-      
-        
+def job():
+    print("scheduled job")        
 
 
 @app.route("/webhook", methods=['GET','POST'])
@@ -77,15 +75,16 @@ def listen():
         event = payload['entry'][0]['messaging']
         for x in event:
             if is_user_message(x):
+                print("user sends msg")
                 text = x['message']['text']
                 sender_id = x['sender']['id']
                 pushItem(text, sender_id)
                 respond(sender_id, text)
-
+        schedule.every(1).minutes.do(respond(sender_id, text)
         return "ok"
 
 
-
+#schedule.every(1).minutes.do(job)  
 
 
 
