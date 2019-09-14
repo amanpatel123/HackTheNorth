@@ -51,19 +51,24 @@ def pushItem(url, userId):
 
 @app.route("/webhook", methods=['GET','POST'])
 def listen():
+    print("listening code")
     """This is the main function flask uses to 
     listen at the `/webhook` endpoint"""
     if request.method == 'GET':
         return verify_webhook(request)
 
     if request.method == 'POST':
+        print("start listening")
         payload = request.json
         event = payload['entry'][0]['messaging']
         for x in event:
+            print("start x in event")
             if is_user_message(x):
                 text = x['message']['text']
                 sender_id = x['sender']['id']
+                print("start before push item")
                 pushItem(text, sender_id)
+                print("after push item")
                 respond(sender_id, text)
 
         return "ok"
