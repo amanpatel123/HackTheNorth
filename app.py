@@ -41,7 +41,7 @@ def is_user_message(message):
             message['message'].get('text') and
             not message['message'].get("is_echo"))
 
-counter = 0
+
 def pushItem(url, userId):
     firebase = pyrebase.initialize_app(config)
     db = firebase.database()
@@ -112,4 +112,5 @@ def send_message(recipient_id, text):
     return response.json()
 
 if __name__ == "__main__":
+    counter=0
     app.run(debug=True)
