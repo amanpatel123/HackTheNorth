@@ -47,7 +47,7 @@ def pushItem(url, userId):
     db = firebase.database()
     newItem = {"userId": userId, "pname": None, "URL": url,   "initial_price": None, "lowest_price":None ,"difference": None , "change": None}
     counter+=1
-    db.child("DATA").child(counter).push(newItem)
+    db.child("DATA").child(counter).set(newItem)
 
 
 @app.route("/webhook", methods=['GET','POST'])
