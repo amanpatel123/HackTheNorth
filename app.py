@@ -44,10 +44,22 @@ def is_user_message(message):
 
 def pushItem(url, userId):
     firebase = pyrebase.initialize_app(config)
-    db = firebase.database()
+    db = firebase.database()  
     newItem = {"userId": userId, "pname": None, "URL": url,   "initial_price": None, "lowest_price":None ,"difference": None , "change": None}
-    counter+=1
-    db.child("DATA").child(counter).set(newItem)
+    
+    db.child("DATA").push(newItem)
+
+# def checkDatabaseTask(userId):
+#     firebase = pyrebase.initialize_app(config)
+#     db = firebase.database()
+    
+#     all_datas=db.child("DATA").get()
+#     for data in all_datas:
+#         user_id=data.child("userId").get()
+#         if user_id==userId.val():
+#             change
+        
+        
 
 
 @app.route("/webhook", methods=['GET','POST'])
@@ -59,7 +71,6 @@ def listen():
         return verify_webhook(request)
 
     if request.method == 'POST':
-        print("start listening")
         payload = request.json
         event = payload['entry'][0]['messaging']
         for x in event:
@@ -112,5 +123,5 @@ def send_message(recipient_id, text):
     return response.json()
 
 if __name__ == "__main__":
-    counter=0
     app.run(debug=True)
+    
