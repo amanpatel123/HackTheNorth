@@ -67,7 +67,6 @@ def pushItem(url, userId):
 
 @app.route("/webhook", methods=['GET','POST'])
 def listen():
-    print("listening code")
     """This is the main function flask uses to 
     listen at the `/webhook` endpoint"""
     if request.method == 'GET':
