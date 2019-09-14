@@ -80,11 +80,10 @@ def listen():
                 sender_id = x['sender']['id']
                 pushItem(text, sender_id)
                 respond(sender_id, text)
-        schedule.every(1).minutes.do(respond(sender_id, text)
         return "ok"
 
 
-#schedule.every(1).minutes.do(job)  
+schedule.every(1).minutes.do(job)  
 
 
 
