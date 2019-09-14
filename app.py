@@ -1,5 +1,22 @@
 from flask import Flask, request, render_template
 import requests
+import pyrebase
+
+config = {
+  "apiKey": "AIzaSyBrTraklyfhPk2BNhPsmw_djvKwVSy7oF4",
+  "authDomain": "pricechecker-71a78.firebaseapp.com",
+  "databaseURL": "https://pricechecker-71a78.firebaseio.com",
+  "storageBucket": "pricechecker-71a78.appspot.com"
+}
+
+firebase = pyrebase.initialize_app(config)
+
+db = firebase.database()
+
+
+
+
+
 
 app = Flask(__name__)
 
@@ -51,9 +68,18 @@ def listen():
                 text = x['message']['text']
                 print('text:', text)
                 sender_id = x['sender']['id']
+                pushItem(text, sender_id)
                 respond(sender_id, text)
 
         return "ok"
+
+
+def pushItem(url, userId):
+    newItem = {"name": userId,  "url": url, "initial": None, "lowest":None, "current": None }
+    db.child("item").push(newItem)
+
+
+
 
 @app.route("/")
 def home():
