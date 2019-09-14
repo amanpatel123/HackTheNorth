@@ -2,19 +2,33 @@
 <html lang="en" dir="ltr">
 <head>
   <meta charset="utf-8">
-  <title>Restaurant Reservation Warehouse System</title>
-
-  <link rel="stylesheet" href="{{ url_for('static',    filename='css/materialize.min.css') }}">
-  <link rel="stylesheet" href="{{ url_for('static',    filename='css/jquery.terminal.min.css') }}">
-
-  <style>
-    .row {
-      display: flex; /* equal height of the children */
-    }
-  </style>
-
+  <title>AmazonDummy</title>
 </head>
 <body>
-  <h1>Hii</h1>
+  <!-- Load Facebook SDK for JavaScript -->
+  <div id="fb-root"></div>
+  <script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      xfbml            : true,
+      version          : 'v4.0'
+    });
+  };
+
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = 'https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js';
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));</script>
+
+  <!-- Your customer chat code -->
+  <div class="fb-customerchat"
+    attribution=install_email
+    page_id="111752916879668"
+      logged_in_greeting="Hello, enter the Amazon URL! :)"
+      logged_out_greeting="Hello, enter the Amazon URL! :)">
+  </div>
 </body>
 </html>
