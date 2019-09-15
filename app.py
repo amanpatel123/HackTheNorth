@@ -84,7 +84,7 @@ def pushItem(url, userId):
             str = "Item is already being monitored. Kindly provide the URL of new element"
             print("Item is already being monitored. Kindly provide the URL of new element")
             send_message(userId, str)
-
+            return
     newItem = {"userId": userId, "pname": "null", "URL": url,   "initial_price": "null", "lowest_price":"null" ,"difference": "null" , "change": "null"}
     db.child("DATA").push(newItem)
 
