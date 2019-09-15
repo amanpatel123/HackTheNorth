@@ -95,7 +95,7 @@ def pushItem(url, userId):
     newItem = {"userId": userId, "pname": "null", "URL": url,   "initial_price": "null", "lowest_price":"null" ,"difference": "null" , "change": "null"}
     db.child("DATA").push(newItem)
 
-def checkDatabaseTask(userId):
+def checkDatabaseTask(url, userId):
     firebase = pyrebase.initialize_app(config)
     db = firebase.database()
     try:
@@ -103,7 +103,8 @@ def checkDatabaseTask(userId):
         all_datas = a.val()
         for key, data in all_datas.items():
             user_id=data["userId"]
-            if user_id==data["userId"]:
+            user_url=data["URL"]
+            if user_id==data["userId"] and user_url==data["URL"]:
                 change = data["change"]
                 if change==1:
                     difference=data["difference"]
@@ -134,7 +135,7 @@ def listen():
                 text = x['message']['text']
                 sender_id = x['sender']['id']
                 pushItem(text, sender_id)
-                checkDatabaseTask(sender_id)
+                checkDatabaseTask(text, sender_id)
                 respond(sender_id, text)
                 i = 0
                 while(i < 1000):
