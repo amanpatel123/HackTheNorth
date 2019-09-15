@@ -1,10 +1,10 @@
 from flask import Flask, request, render_template
 import requests
 from pyrebase import pyrebase
-# import time
-# import atexit
-# from apscheduler.schedulers.background import BackgroundScheduler
+import sched, time
 
+
+s = sched.scheduler(time.time, time.sleep)
 
 
 config = {
@@ -21,6 +21,10 @@ app = Flask(__name__)
 FB_API_URL = 'https://graph.facebook.com/v2.6/me/messages'
 VERIFY_TOKEN = 'aBaNIgB/sj70tCgtPpK50ZIf9fHLVTx/S1V/A4P6STM='
 PAGE_ACCESS_TOKEN = 'EAAGfED5iSXUBADpODELNQ5L91rQTVcc4oZBeNMPX6blm3qCpdIdnkcD5aGXqL6mP2YnGv6jjl1q6NlbYs9EZCz4ij3bP0JHJIZCtK4vZBSKrrnfNLDJweZCZASrtVfRPbJcaD8yFs6g373aSfrAJVDIDJSpu3RYQeSOZCnghM6mLQZDZD'
+
+
+def trigger(userid):
+    checkDatabaseTask(userid)
 
 
 def get_bot_response(message):
@@ -131,11 +135,15 @@ def listen():
                 pushItem(text, sender_id)
                 checkDatabaseTask(sender_id)
                 respond(sender_id, text)
+                s.enter(10, 1, trigger, argument=(sender_id))
         return "ok"
 
 @app.route("/")
 def home():
     return render_template("home.html")
+
+
+
 
 if __name__ == "__main__":
     app.run(debug=True)
