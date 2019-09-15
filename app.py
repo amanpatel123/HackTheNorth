@@ -157,7 +157,7 @@ def listen():
                         s.enter(10000, 1, trigger, argument=(text, sender_id))
                         i += 1
                         print("____________\n")
-                else
+                else:
                     respondInvalid(sender_id, 'Please enter a valid url')
         return "ok"
 
