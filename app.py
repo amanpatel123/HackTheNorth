@@ -91,7 +91,7 @@ def checkDatabaseTask(userId):
             change = data["change"]
             if change==1:
                 difference=data["difference"]
-                string=str.format("The price goes down by %s", difference)
+                string="The price goes down by " + difference
                 send_message(userId, string)
                 
    
