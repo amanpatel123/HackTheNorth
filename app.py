@@ -147,8 +147,8 @@ def listen():
             if is_user_message(x):
                 print("user sends msg")
                 text = x['message']['text']
+                sender_id = x['sender']['id']
                 if (checkUrl(text)):
-                    sender_id = x['sender']['id']
                     pushItem(text, sender_id)
                     checkDatabaseTask(text, sender_id)
                     respond(sender_id, text)
