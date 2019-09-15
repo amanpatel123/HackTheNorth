@@ -94,20 +94,22 @@ def pushItem(url, userId):
 def checkDatabaseTask(userId):
     firebase = pyrebase.initialize_app(config)
     db = firebase.database()
-    
-    all_datas=db.child("DATA").get().val()
-    for key, data in all_datas.items():
-        user_id=data.child("userId").get()
-        if user_id==data["userId"]:
-            change = data["change"]
-            if change==1:
-                difference=data["difference"]
-                string=str.format("The price goes down by %d", difference)
-                difference=data["difference"]
-                string=str.format("The price has decreased by %d, time to consider buying it!", difference)
-                difference=data["difference"]
-                string="The price goes down by " + difference
-                send_message(userId, string)
+    try:
+        all_datas=db.child("DATA").get().val()
+        for key, data in all_datas.items():
+            user_id=data.child("userId").get()
+            if user_id==data["userId"]:
+                change = data["change"]
+                if change==1:
+                    difference=data["difference"]
+                    string=str.format("The price goes down by %d", difference)
+                    difference=data["difference"]
+                    string=str.format("The price has decreased by %d, time to consider buying it!", difference)
+                    difference=data["difference"]
+                    string="The price goes down by " + difference
+                    send_message(userId, string)
+    except:
+        print("lol")
     
    
 @app.route("/webhook", methods=['GET','POST'])
