@@ -69,6 +69,10 @@ def respond(sender, message):
     response = get_bot_response(message)
     send_message(sender, response)
 
+def respondInvalid(sender, message):
+    """Formulate a response to the user and
+    pass it on to a function that sends it."""
+    send_message(sender, message)
 
 def is_user_message(message):
     """Check if the message is a message from the user"""
@@ -134,14 +138,17 @@ def listen():
                 print("user sends msg")
                 text = x['message']['text']
                 sender_id = x['sender']['id']
-                pushItem(text, sender_id)
-                checkDatabaseTask(text, sender_id)
-                respond(sender_id, text)
-                i = 0
-                while(i < 1000):
-                    s.enter(10000, 1, trigger, argument=(text, sender_id))
-                    i += 1
-                    print("____________\n")
+                if checkUrl(text):
+                    pushItem(text, sender_id)
+                    checkDatabaseTask(text, sender_id)
+                    respond(sender_id, text)
+                    i = 0
+                    while(i < 1000):
+                        s.enter(10000, 1, trigger, argument=(text, sender_id))
+                        i += 1
+                        print("____________\n")
+                else:
+                    respondInvalid(sender_id, 'Please enter a valid url.')
         return "ok"
 
 @app.route("/")
