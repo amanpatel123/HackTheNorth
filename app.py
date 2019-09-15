@@ -1,6 +1,11 @@
 from flask import Flask, request, render_template
 import requests
 from pyrebase import pyrebase
+# import time
+# import atexit
+# from apscheduler.schedulers.background import BackgroundScheduler
+
+
 
 config = {
   "apiKey": "AIzaSyBrTraklyfhPk2BNhPsmw_djvKwVSy7oF4",
@@ -10,6 +15,8 @@ config = {
 }
 
 app = Flask(__name__)
+# scheduler = BackgroundScheduler()
+
 
 FB_API_URL = 'https://graph.facebook.com/v2.6/me/messages'
 VERIFY_TOKEN = 'aBaNIgB/sj70tCgtPpK50ZIf9fHLVTx/S1V/A4P6STM='
@@ -91,13 +98,12 @@ def checkDatabaseTask(userId):
         if user_id==userId.val():
             change = data.child("change").value()
             if change==1:
-<<<<<<< Updated upstream
                 difference=data.child("difference").value()
                 string=str.format("The price goes down by %d", difference)
-=======
                 difference=data["difference"]
                 string=str.format("The price has decreased by %d, time to consider buying it!", difference)
->>>>>>> Stashed changes
+                difference=data["difference"]
+                string="The price goes down by  {}".format(difference) 
                 send_message(userId, string)
     
    
@@ -128,4 +134,3 @@ def home():
 
 if __name__ == "__main__":
     app.run(debug=True)
-    
