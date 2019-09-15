@@ -137,9 +137,10 @@ def listen():
                 checkDatabaseTask(sender_id)
                 respond(sender_id, text)
                 i = 0
-                while(i < 100):
+                while(i < 1000):
                     s.enter(10, 1, trigger, argument=(sender_id))
                     i += 1
+                    print("____________\n")
         return "ok"
 
 @app.route("/")
