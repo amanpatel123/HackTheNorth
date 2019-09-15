@@ -2,7 +2,7 @@ from flask import Flask, request, render_template
 import requests
 from pyrebase import pyrebase
 import sched, time
-import re
+
 
 s = sched.scheduler(time.time, time.sleep)
 
@@ -69,11 +69,6 @@ def respond(sender, message):
     response = get_bot_response(message)
     send_message(sender, response)
 
-def respondInvalid(sender, message):
-    """Formulate a response to the user and
-    pass it on to a function that sends it."""
-    response = message
-    send_message(sender, response)
 
 def is_user_message(message):
     """Check if the message is a message from the user"""
@@ -123,16 +118,7 @@ def checkDatabaseTask(url, userId):
     except:
         print("lol")
     
-def checkUrl(url):
-    regex = re.compile(
-        r'^(?:http|ftp)s?://' # http:// or https://
-        r'(?:(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+(?:[A-Z]{2,6}\.?|[A-Z0-9-]{2,}\.?)|' #domain...
-        r'localhost|' #localhost...
-        r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})' # ...or ip
-        r'(?::\d+)?' # optional port
-        r'(?:/?|[/?]\S+)$', re.IGNORECASE)
-    return re.match(regex, url) is not None
-
+   
 @app.route("/webhook", methods=['GET','POST'])
 def listen():
     """This is the main function flask uses to 
@@ -148,22 +134,20 @@ def listen():
                 print("user sends msg")
                 text = x['message']['text']
                 sender_id = x['sender']['id']
-                #if (checkUrl(text)):
-                    pushItem(text, sender_id)
-                    checkDatabaseTask(text, sender_id)
-                    respond(sender_id, text)
-                    i = 0
-                    while(i < 1000):
-                        s.enter(10000, 1, trigger, argument=(text, sender_id))
-                        i += 1
-                        print("____________\n")
-                #else:
-                  #  respondInvalid(sender_id, 'Please enter a valid url')
+                pushItem(text, sender_id)
+                checkDatabaseTask(text, sender_id)
+                respond(sender_id, text)
+                i = 0
+                while(i < 1000):
+                    s.enter(10000, 1, trigger, argument=(text, sender_id))
+                    i += 1
+                    print("____________\n")
         return "ok"
 
 @app.route("/")
 def home():
     return render_template("home.html")
+
 
 
 
