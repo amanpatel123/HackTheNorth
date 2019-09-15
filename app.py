@@ -15,6 +15,8 @@ config = {
 }
 
 app = Flask(__name__)
+scheduler = BackgroundScheduler()
+
 
 FB_API_URL = 'https://graph.facebook.com/v2.6/me/messages'
 VERIFY_TOKEN = 'aBaNIgB/sj70tCgtPpK50ZIf9fHLVTx/S1V/A4P6STM='
@@ -89,7 +91,7 @@ def checkDatabaseTask(userId):
             change = data["change"]
             if change==1:
                 difference=data["difference"]
-                string=str.format("The price goes down by %d", difference)
+                string=str.format("The price goes down by %s", difference)
                 send_message(userId, string)
                 
    
@@ -122,7 +124,6 @@ def home():
 
 if __name__ == "__main__":
     app.run(debug=True)
-    scheduler = BackgroundScheduler()
     scheduler.add_job(func=checkDatabaseTask, trigger="interval", seconds=30)
     scheduler.start()
 
