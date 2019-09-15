@@ -30,7 +30,7 @@ def trigger(userid):
 def get_bot_response(message):
     """This is just a dummy function, returning a variation of what
     the user said. Replace this function with one connected to chatbot."""
-    return 'Okay, I will keep a track of the provided URL!'
+    return 'I will keep a track of the provided URL!'
 
 def send_message(recipient_id, text):
     """Send a response to Facebook"""
