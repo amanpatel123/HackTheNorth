@@ -26,7 +26,7 @@ PAGE_ACCESS_TOKEN = 'EAAGfED5iSXUBADpODELNQ5L91rQTVcc4oZBeNMPX6blm3qCpdIdnkcD5aG
 def get_bot_response(message):
     """This is just a dummy function, returning a variation of what
     the user said. Replace this function with one connected to chatbot."""
-    return ('Okay, I will keep a track of the provided URL!'.format(message))
+    return 'Okay, I will keep a track of the provided URL!'
 
 def send_message(recipient_id, text):
     """Send a response to Facebook"""
