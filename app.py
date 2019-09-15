@@ -107,11 +107,11 @@ def checkDatabaseTask(userId):
                 change = data["change"]
                 if change==1:
                     difference=data["difference"]
-                    string=str.format("The price goes down by {}", difference)
+                    string=str.format("The price goes down by ${}", difference)
                     difference=data["difference"]
-                    string=str.format("The price has decreased by {}, time to consider buying it!", difference)
+                    string=str.format("The price has decreased by ${}, time to consider buying it!", difference)
                     difference=data["difference"]
-                    string=str.format("The price went down by {}", difference) 
+                    string=str.format("The price went down by ${}", difference) 
                     print("*****************\n",string,"\n**************")
                     send_message(userId, string)
     except:
