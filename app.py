@@ -102,7 +102,7 @@ def checkDatabaseTask(userId):
         a=db.child("DATA").get()
         all_datas = a.val()
         for key, data in all_datas.items():
-            user_id=data.child("userId").get()
+            user_id=data["userId"]
             if user_id==data["userId"]:
                 change = data["change"]
                 if change==1:
