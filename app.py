@@ -122,7 +122,6 @@ def listen():
                 print("user sends msg")
                 text = x['message']['text']
                 sender_id = x['sender']['id']
-                checkInDataBase(text, sender_id)
                 pushItem(text, sender_id)
                 checkDatabaseTask(sender_id)
                 respond(sender_id, text)
