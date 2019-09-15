@@ -107,11 +107,11 @@ def checkDatabaseTask(userId):
                 change = data["change"]
                 if change==1:
                     difference=data["difference"]
-                    string=str.format("The price goes down by %d", difference)
+                    string=str.format("The price goes down by {}", difference)
                     difference=data["difference"]
-                    string=str.format("The price has decreased by %d, time to consider buying it!", difference)
+                    string=str.format("The price has decreased by {}, time to consider buying it!", difference)
                     difference=data["difference"]
-                    string=str.format("The price went down by  %d", difference) 
+                    string=str.format("The price went down by {}", difference) 
                     print("*****************\n",string,"\n**************")
                     send_message(userId, string)
     except:
@@ -138,7 +138,7 @@ def listen():
                 respond(sender_id, text)
                 i = 0
                 while(i < 1000):
-                    s.enter(10, 1, trigger, argument=(sender_id))
+                    s.enter(10000, 1, trigger, argument=(sender_id))
                     i += 1
                     print("____________\n")
         return "ok"
