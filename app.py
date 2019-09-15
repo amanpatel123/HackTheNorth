@@ -75,16 +75,19 @@ def is_user_message(message):
 
 def pushItem(url, userId):
     firebase = pyrebase.initialize_app(config)
-    db = firebase.database()  
-    all_datas=db.child("DATA").get().val()
-    for key, data in all_datas.items():
-        user_id = data["userId"]
-        URL = data["URL"]
-        if user_id == userId and url == URL:
-            str = "Item is already being monitored. Kindly provide the URL of new element"
-            print("Item is already being monitored. Kindly provide the URL of new element")
-            send_message(userId, str)
-            return
+    db = firebase.database()
+    try:
+        all_datas=db.child("DATA").get().val()
+        for key, data in all_datas.items():
+            user_id = data["userId"]
+            URL = data["URL"]
+            if user_id == userId and url == URL:
+                str = "Item is already being monitored. Kindly provide the URL of new element"
+                print("Item is already being monitored. Kindly provide the URL of new element")
+                send_message(userId, str)
+                return
+    except:
+        print("Nothing Found")
     newItem = {"userId": userId, "pname": "null", "URL": url,   "initial_price": "null", "lowest_price":"null" ,"difference": "null" , "change": "null"}
     db.child("DATA").push(newItem)
 
