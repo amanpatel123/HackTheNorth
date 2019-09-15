@@ -95,7 +95,7 @@ def checkDatabaseTask(userId):
     firebase = pyrebase.initialize_app(config)
     db = firebase.database()
     
-    all_datas=db.child("DATA").get()
+    all_datas=db.child("DATA").get().val()
     for key, data in all_datas:
         user_id=data.child("userId").get()
         if user_id==userId.val():
