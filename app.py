@@ -1,6 +1,11 @@
 from flask import Flask, request, render_template
 import requests
 from pyrebase import pyrebase
+import time
+import atexit
+from apscheduler.schedulers.background import BackgroundScheduler
+
+
 
 config = {
   "apiKey": "AIzaSyBrTraklyfhPk2BNhPsmw_djvKwVSy7oF4",
@@ -116,5 +121,10 @@ def home():
 
 
 if __name__ == "__main__":
+    scheduler = BackgroundScheduler()
     app.run(debug=True)
-    
+    scheduler.add_job(func=checkDatabaseTask, trigger="interval", seconds=30)
+    scheduler.start()
+
+# Shut down the scheduler when exiting the app
+    atexit.register(lambda: scheduler.shutdown())
