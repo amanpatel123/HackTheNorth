@@ -2,6 +2,7 @@ from flask import Flask, request, render_template
 import requests
 from pyrebase import pyrebase
 import sched, time
+import validators
 
 
 s = sched.scheduler(time.time, time.sleep)
@@ -80,6 +81,8 @@ def is_user_message(message):
             message['message'].get('text') and
             not message['message'].get("is_echo"))
 
+def checkUrl(text):
+    return validators.url(text)
 
 def pushItem(url, userId):
     firebase = pyrebase.initialize_app(config)
