@@ -148,7 +148,7 @@ def listen():
                 print("user sends msg")
                 text = x['message']['text']
                 sender_id = x['sender']['id']
-                if (checkUrl(text)):
+                #if (checkUrl(text)):
                     pushItem(text, sender_id)
                     checkDatabaseTask(text, sender_id)
                     respond(sender_id, text)
@@ -157,8 +157,8 @@ def listen():
                         s.enter(10000, 1, trigger, argument=(text, sender_id))
                         i += 1
                         print("____________\n")
-                else:
-                    respondInvalid(sender_id, 'Please enter a valid url')
+                #else:
+                  #  respondInvalid(sender_id, 'Please enter a valid url')
         return "ok"
 
 @app.route("/")
