@@ -99,7 +99,7 @@ def checkDatabaseTask(userId):
     for key, data in all_datas.items():
         user_id=data.child("userId").get()
         if user_id==data["userId"]:
-            change = data.["change"]
+            change = data["change"]
             if change==1:
                 difference=data["difference"]
                 string=str.format("The price goes down by %d", difference)
