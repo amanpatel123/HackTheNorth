@@ -121,7 +121,6 @@ def home():
 
 
 if __name__ == "__main__":
-    
     app.run(debug=True)
     scheduler = BackgroundScheduler()
     scheduler.add_job(func=checkDatabaseTask, trigger="interval", seconds=30)
