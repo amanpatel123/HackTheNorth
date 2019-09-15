@@ -86,9 +86,9 @@ def pushItem(url, userId):
             user_id = data["userId"]
             URL = data["URL"]
             if user_id == userId and url == URL:
-                str = "Item is already being monitored. Kindly provide the URL of new element"
+                strw = "Item is already being monitored. Kindly provide the URL of new element"
                 print("Item is already being monitored. Kindly provide the URL of new element")
-                send_message(userId, str)
+                send_message(userId, strw)
                 return
     except:
         print("Nothing Found")
@@ -111,7 +111,8 @@ def checkDatabaseTask(userId):
                     difference=data["difference"]
                     string=str.format("The price has decreased by %d, time to consider buying it!", difference)
                     difference=data["difference"]
-                    string="The price goes down by " + difference
+                    string=str.format("The price went down by  %d", difference) 
+                    print("*****************\n",string,"\n**************")
                     send_message(userId, string)
     except:
         print("lol")
