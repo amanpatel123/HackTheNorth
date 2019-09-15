@@ -135,7 +135,10 @@ def listen():
                 pushItem(text, sender_id)
                 checkDatabaseTask(sender_id)
                 respond(sender_id, text)
-                s.enter(10, 1, trigger, argument=(sender_id))
+                i = 0
+                while(i < 100):
+                    s.enter(10, 1, trigger, argument=(sender_id))
+                    i += 1
         return "ok"
 
 @app.route("/")
