@@ -104,7 +104,7 @@ def checkDatabaseTask(url, userId):
         for key, data in all_datas.items():
             user_id=data["userId"]
             user_url=data["URL"]
-            if user_id==data["userId"] and user_url==data["URL"]:
+            if user_id==data["userId"] and url==user_url:
                 change = data["change"]
                 if change==1:
                     difference=data["difference"]
